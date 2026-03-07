@@ -85,10 +85,10 @@ function renderTrendChart() {
   const months = ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"];
 
   const brandColors = {
-    crocs: { border: "#5cb85c", bg: "rgba(92,184,92,0.15)" },
+    crocs: { border: "#43B02A", bg: "rgba(67,176,42,0.15)" },
     nike: { border: "#111", bg: "rgba(17,17,17,0.05)" },
     adidas: { border: "#0066b2", bg: "rgba(0,102,178,0.05)" },
-    allbirds: { border: "#2d6a4f", bg: "rgba(45,106,79,0.05)" },
+    allbirds: { border: "#006A4E", bg: "rgba(0,106,78,0.05)" },
     puma: { border: "#e4002b", bg: "rgba(228,0,43,0.05)" },
     birkenstock: { border: "#8b6914", bg: "rgba(139,105,20,0.05)" },
   };
@@ -142,7 +142,7 @@ function renderPillarChart() {
   const values = sorted.map(s => s[1]);
 
   const hasCrocs = labels.map(l => BRANDS.crocs.pillars.includes(l));
-  const colors = hasCrocs.map(h => h ? "#5cb85c" : "#c8e6c9");
+  const colors = hasCrocs.map(h => h ? "#43B02A" : "#C8E6B8");
 
   if (window._pillarChart) window._pillarChart.destroy();
   window._pillarChart = new Chart(ctx, {
@@ -252,8 +252,8 @@ function renderGapChart() {
         {
           label: "Crocs",
           data: GAP_DATA.crocs,
-          borderColor: "#5cb85c",
-          backgroundColor: "rgba(92,184,92,0.2)",
+          borderColor: "#43B02A",
+          backgroundColor: "rgba(67,176,42,0.2)",
           borderWidth: 2,
           pointRadius: 4,
         },
@@ -269,8 +269,8 @@ function renderGapChart() {
         {
           label: "Category Leader",
           data: GAP_DATA.leader,
-          borderColor: "#2d6a4f",
-          backgroundColor: "rgba(45,106,79,0.05)",
+          borderColor: "#006A4E",
+          backgroundColor: "rgba(0,106,78,0.05)",
           borderWidth: 1,
           borderDash: [2, 2],
           pointRadius: 2,
@@ -302,7 +302,7 @@ function renderCampaignFeed() {
   container.innerHTML = sorted.map(c => {
     const dateStr = new Date(c.date).toLocaleDateString("en-US", { month: "short", day: "numeric" });
     const isCrocs = c.brand === "Crocs";
-    return `<div class="campaign-item" style="${isCrocs ? "border-left:3px solid #5cb85c;" : ""}">
+    return `<div class="campaign-item" style="${isCrocs ? "border-left:3px solid #43B02A;" : ""}">
       <div class="campaign-brand">${c.brand}${isCrocs ? " (You)" : ""}</div>
       <div class="campaign-title">${c.title}</div>
       <div class="campaign-desc">${c.description}</div>

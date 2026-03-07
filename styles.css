@@ -1,12 +1,14 @@
 :root {
-  --green-dark: #1a5c2a;
-  --green-mid: #2e8b57;
-  --green-light: #4caf50;
-  --green-pale: #e8f5e9;
-  --crocs-brand: #5cb85c;
-  --bg: #f4f6f3;
+  --green-dark: #006A4E;
+  --green-mid: #43B02A;
+  --green-light: #6CC24A;
+  --green-pale: #E5F5E0;
+  --crocs-brand: #43B02A;
+  --crocs-dark: #006A4E;
+  --crocs-black: #1D1D1B;
+  --bg: #F5F7F4;
   --card-bg: #ffffff;
-  --text: #1e1e1e;
+  --text: #1D1D1B;
   --text-muted: #6b7280;
   --border: #e0e0e0;
   --red: #ef4444;
@@ -24,13 +26,13 @@ body {
 }
 
 header {
-  background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+  background: linear-gradient(135deg, var(--crocs-black), #2a2a28);
   color: white;
   padding: 1rem 2rem;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
 .header-inner {
@@ -41,10 +43,10 @@ header {
   align-items: center;
 }
 
-.logo { display: flex; align-items: center; gap: 0.75rem; }
-.logo-icon { font-size: 2rem; }
-.logo h1 { font-size: 1.4rem; font-weight: 700; }
-.subtitle { font-size: 0.8rem; opacity: 0.85; }
+.logo { display: flex; align-items: center; gap: 1rem; }
+.logo-img { height: 40px; width: auto; }
+.logo h1 { font-size: 1.4rem; font-weight: 700; color: var(--green-mid); }
+.subtitle { font-size: 0.8rem; opacity: 0.85; color: #ccc; }
 
 .header-meta { display: flex; align-items: center; gap: 1rem; }
 .last-updated { font-size: 0.75rem; opacity: 0.8; }
@@ -87,10 +89,10 @@ main {
 
 /* Positioning Banner */
 .positioning-banner {
-  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+  background: linear-gradient(135deg, #E5F5E0, #C8E6B8);
   border-radius: 12px;
   padding: 1.5rem 2rem;
-  border: 1px solid #a5d6a7;
+  border: 1px solid #A5D6A0;
 }
 
 .positioning-banner h2 {
@@ -109,7 +111,7 @@ main {
   background: white;
   border-radius: 8px;
   padding: 1rem;
-  border-left: 4px solid var(--green-mid);
+  border-left: 4px solid var(--crocs-brand);
 }
 
 .positioning-item .label {
@@ -225,8 +227,8 @@ td {
 
 tr:hover { background: #fafffe; }
 
-tr.is-crocs { background: #f0faf0; font-weight: 600; }
-tr.is-crocs:hover { background: #e5f5e5; }
+tr.is-crocs { background: #E5F5E0; font-weight: 600; }
+tr.is-crocs:hover { background: #D4EDCF; }
 
 .score-bar {
   display: inline-flex;
@@ -237,7 +239,7 @@ tr.is-crocs:hover { background: #e5f5e5; }
 .score-bar-fill {
   height: 8px;
   border-radius: 4px;
-  background: var(--green-mid);
+  background: var(--crocs-brand);
   display: inline-block;
 }
 
