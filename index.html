@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crocs Sustainability Marketing Dashboard</title>
+  <title>Crocs Marketing Intelligence Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -12,19 +12,12 @@
     <div class="header-inner">
       <div class="logo">
         <svg class="logo-img" viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg">
-          <!-- Crocs Wordmark -->
           <g fill="#43B02A">
-            <!-- C -->
             <path d="M10,60 C10,27 30,5 65,5 C85,5 100,12 110,25 L95,42 C88,33 78,27 65,27 C45,27 35,42 35,60 C35,78 45,93 65,93 C78,93 88,87 95,78 L110,95 C100,108 85,115 65,115 C30,115 10,93 10,60Z"/>
-            <!-- r -->
             <path d="M125,45 L148,45 L148,58 C155,48 165,43 178,43 L178,67 C175,66 172,65 168,65 C158,65 150,70 148,78 L148,115 L125,115Z"/>
-            <!-- o -->
             <path d="M185,80 C185,58 202,43 225,43 C248,43 265,58 265,80 C265,102 248,117 225,117 C202,117 185,102 185,80Z M208,80 C208,93 215,100 225,100 C235,100 242,93 242,80 C242,67 235,60 225,60 C215,60 208,67 208,80Z"/>
-            <!-- c -->
             <path d="M275,80 C275,58 292,43 315,43 C330,43 340,48 348,58 L333,72 C328,66 323,62 315,62 C305,62 298,69 298,80 C298,91 305,98 315,98 C323,98 328,94 333,88 L348,102 C340,112 330,117 315,117 C292,117 275,102 275,80Z"/>
-            <!-- s -->
             <path d="M355,97 L367,83 C373,90 382,95 393,95 C402,95 407,92 407,87 C407,81 398,79 388,76 C375,72 360,66 360,50 C360,36 372,43 355,43 C370,43 380,46 390,43 L390,43 C400,43 410,46 418,53 L406,67 C400,61 393,57 385,57 C377,57 373,60 373,64 C373,70 382,72 392,75 C405,79 420,85 420,101 C420,114 408,117 393,117 C377,117 363,110 355,97Z"/>
-            <!-- Croc character (Duke) simplified -->
             <g transform="translate(440, 0)">
               <ellipse cx="70" cy="60" rx="55" ry="52" fill="#43B02A"/>
               <ellipse cx="50" cy="42" rx="10" ry="12" fill="white"/>
@@ -36,8 +29,8 @@
           </g>
         </svg>
         <div>
-          <h1>Sustainability Tracker</h1>
-          <p class="subtitle">Peer Marketing Intelligence Dashboard</p>
+          <h1>Marketing Intelligence</h1>
+          <p class="subtitle">Crocs Brand Dashboard</p>
         </div>
       </div>
       <div class="header-meta">
@@ -45,9 +38,14 @@
         <button class="btn-refresh" onclick="refreshData()">Refresh Data</button>
       </div>
     </div>
+    <nav class="tab-nav">
+      <button class="tab-btn active" data-tab="sustainability">Sustainability Tracker</button>
+      <button class="tab-btn" data-tab="jibbitz">Jibbitz Trends</button>
+    </nav>
   </header>
 
-  <main>
+  <!-- ═══ TAB: SUSTAINABILITY ═══ -->
+  <main id="tab-sustainability" class="tab-content active">
     <!-- Recommended Actions -->
     <section class="card actions-section">
       <h3>Recommended Actions</h3>
@@ -127,11 +125,74 @@
     </section>
   </main>
 
+  <!-- ═══ TAB: JIBBITZ TRENDS ═══ -->
+  <main id="tab-jibbitz" class="tab-content">
+
+    <!-- Pipeline Summary -->
+    <section class="jb-pipeline" id="jbPipeline"></section>
+
+    <!-- Hot Right Now -->
+    <section class="card">
+      <div class="jb-section-header">
+        <div>
+          <h3>Hot Right Now</h3>
+          <p class="actions-subtitle">Viral moments with high Jibbitz potential &mdash; act fast, these windows close quickly</p>
+        </div>
+        <div class="table-controls" style="margin-bottom:0;">
+          <select id="jbCategoryFilter" onchange="filterTrends()">
+            <option value="all">All Categories</option>
+            <option value="animals">Viral Animals</option>
+            <option value="pop-culture">Pop Culture</option>
+            <option value="food">Food & Drink</option>
+            <option value="memes">Memes & Internet</option>
+            <option value="sports">Sports</option>
+            <option value="characters">Characters & Mascots</option>
+          </select>
+          <select id="jbSortSelect" onchange="sortTrends()">
+            <option value="score">Sort: Jibbitz Score</option>
+            <option value="velocity">Sort: Velocity</option>
+            <option value="volume">Sort: Social Volume</option>
+            <option value="sentiment">Sort: Sentiment</option>
+          </select>
+        </div>
+      </div>
+      <div class="jb-trends-grid" id="jbTrendsGrid"></div>
+    </section>
+
+    <!-- Two-col: Velocity Chart + Category Breakdown -->
+    <section class="two-col">
+      <div class="card chart-card">
+        <h3>Trend Velocity (7-Day Momentum)</h3>
+        <canvas id="jbVelocityChart"></canvas>
+      </div>
+      <div class="card chart-card">
+        <h3>Category Breakdown</h3>
+        <canvas id="jbCategoryChart"></canvas>
+      </div>
+    </section>
+
+    <!-- Jibbitz Production Pipeline -->
+    <section class="card">
+      <h3>Jibbitz Production Pipeline</h3>
+      <p class="actions-subtitle">Track trend-to-product lifecycle from detection to launch</p>
+      <div class="jb-pipeline-board" id="jbPipelineBoard"></div>
+    </section>
+
+    <!-- Success Stories -->
+    <section class="card">
+      <h3>Jibbitz Wins</h3>
+      <p class="actions-subtitle">Past viral Jibbitz launches and their impact</p>
+      <div class="jb-wins-grid" id="jbWinsGrid"></div>
+    </section>
+  </main>
+
   <footer>
-    <p>Crocs Sustainability Marketing Intelligence &mdash; Internal Use Only</p>
+    <p>Crocs Marketing Intelligence &mdash; Internal Use Only</p>
   </footer>
 
   <script src="data.js"></script>
+  <script src="jibbitz-data.js"></script>
   <script src="app.js"></script>
+  <script src="jibbitz-app.js"></script>
 </body>
 </html>
