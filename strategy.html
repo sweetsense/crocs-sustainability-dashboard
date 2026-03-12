@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strategy Detail — Crocs Marketing Intelligence</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background: var(--bg); }
+
+    .strategy-header {
+      background: linear-gradient(135deg, var(--crocs-black), #2a2a28);
+      color: white;
+      padding: 2rem 2rem 2.5rem;
+    }
+
+    .strategy-header-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .strategy-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 0.8rem;
+      margin-bottom: 1.5rem;
+      transition: color 0.2s;
+    }
+
+    .strategy-back:hover { color: var(--green-mid); }
+
+    .strategy-type-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 0.75rem;
+    }
+
+    .strategy-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    .strategy-hero-stat {
+      font-size: 1rem;
+      color: var(--green-mid);
+      font-weight: 600;
+    }
+
+    .strategy-body {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .strat-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.75rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+    }
+
+    .strat-card h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--green-pale);
+    }
+
+    .strat-summary {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    /* Why Now */
+    .why-now-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .why-now-list li {
+      padding: 0.75rem 1rem;
+      background: #fefce8;
+      border-left: 3px solid var(--amber);
+      border-radius: 0 6px 6px 0;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    /* Competitor Moves */
+    .comp-moves {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .comp-move {
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      gap: 1rem;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+
+    .comp-move-brand {
+      font-weight: 700;
+      color: var(--green-dark);
+    }
+
+    .comp-move-impact {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: var(--green-pale);
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    /* Action Items */
+    .action-items {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .action-item {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      position: relative;
+      border-left: 4px solid var(--green-mid);
+    }
+
+    .action-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+      gap: 1rem;
+    }
+
+    .action-item-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--crocs-black);
+    }
+
+    .action-item-timeline {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: white;
+      background: var(--green-dark);
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .action-item-detail {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+
+    .action-item-effort {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.75rem;
+    }
+
+    .action-item-effort span {
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .effort-high { background: #fee2e2; color: #991b1b; }
+    .effort-medium { background: #fef3c7; color: #92400e; }
+    .effort-low { background: #dcfce7; color: #166534; }
+    .impact-high { background: #dcfce7; color: #166534; }
+    .impact-medium { background: #e0f2fe; color: #075985; }
+
+    /* KPIs */
+    .kpi-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .kpi-table th {
+      text-align: left;
+      padding: 0.75rem;
+      background: var(--green-pale);
+      color: var(--green-dark);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .kpi-table td {
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+
+    .kpi-current { color: var(--red); font-weight: 600; }
+    .kpi-target { color: var(--green-dark); font-weight: 700; }
+    .kpi-arrow { color: var(--text-muted); padding: 0 0.5rem; }
+
+    /* Risks */
+    .risk-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .risk-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+
+    .risk-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.3rem;
+    }
+
+    .risk-label-risk { color: var(--red); }
+    .risk-label-mit { color: var(--green-dark); }
+
+    /* Budget */
+    .budget-box {
+      background: linear-gradient(135deg, #E5F5E0, #C8E6B8);
+      border-radius: 10px;
+      padding: 1.25rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--green-dark);
+      border: 1px solid #A5D6A0;
+    }
+
+    @media (max-width: 700px) {
+      .strategy-title { font-size: 1.4rem; }
+      .comp-move { grid-template-columns: 1fr; }
+      .risk-item { grid-template-columns: 1fr; }
+      .strategy-body { padding: 1rem; }
+      .action-item-header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="strategy-header">
+    <div class="strategy-header-inner">
+      <a href="index.html" class="strategy-back">← Back to Dashboard</a>
+      <div id="strategyHeader"></div>
+    </div>
+  </div>
+
+  <div class="strategy-body" id="strategyBody"></div>
+
+  <footer>
+    <p>Crocs Marketing Intelligence &mdash; Internal Use Only</p>
+  </footer>
+
+  <script src="strategy-data.js"></script>
+  <script>
+    const id = new URLSearchParams(location.search).get('id');
+    const strategy = STRATEGIES[id];
+
+    if (!strategy) {
+      document.getElementById('strategyHeader').innerHTML = '<h1 class="strategy-title">Strategy Not Found</h1>';
+      document.getElementById('strategyBody').innerHTML = '<div class="strat-card"><p>No strategy found for this ID. <a href="index.html">Return to dashboard</a>.</p></div>';
+    } else {
+      const priorityColors = { high: '#fee2e2;color:#991b1b', medium: '#fef3c7;color:#92400e', low: '#e0f2fe;color:#075985' };
+
+      // Header
+      document.title = strategy.title + ' — Crocs Marketing Intelligence';
+      document.getElementById('strategyHeader').innerHTML = `
+        <div class="strategy-type-badge" style="background:${priorityColors[strategy.priority]}">${strategy.priority} priority · ${strategy.type}</div>
+        <h1 class="strategy-title">${strategy.title}</h1>
+        <div class="strategy-hero-stat">${strategy.heroStat}</div>
+      `;
+
+      // Body
+      let html = '';
+
+      // Summary
+      html += `<div class="strat-card"><h2>Strategic Overview</h2><p class="strat-summary">${strategy.summary}</p></div>`;
+
+      // Why Now
+      html += `<div class="strat-card"><h2>Why Now</h2><ul class="why-now-list">${strategy.whyNow.map(w => `<li>${w}</li>`).join('')}</ul></div>`;
+
+      // Competitor Moves
+      if (strategy.competitorMoves.length) {
+        html += `<div class="strat-card"><h2>What Competitors Are Doing</h2><div class="comp-moves">${strategy.competitorMoves.map(c => `
+          <div class="comp-move">
+            <div class="comp-move-brand">${c.brand}</div>
+            <div>${c.action}</div>
+            <div class="comp-move-impact">${c.impact}</div>
+          </div>
+        `).join('')}</div></div>`;
+      }
+
+      // Action Items
+      html += `<div class="strat-card"><h2>Action Plan</h2><div class="action-items">${strategy.actions.map((a, i) => `
+        <div class="action-item">
+          <div class="action-item-header">
+            <div class="action-item-title">${i + 1}. ${a.title}</div>
+            <div class="action-item-timeline">${a.timeline}</div>
+          </div>
+          <div class="action-item-detail">${a.detail}</div>
+          ${a.effort ? `<div class="action-item-effort">
+            <span class="effort-${a.effort}">Effort: ${a.effort}</span>
+            <span class="impact-${a.impact}">Impact: ${a.impact}</span>
+          </div>` : ''}
+        </div>
+      `).join('')}</div></div>`;
+
+      // KPIs
+      html += `<div class="strat-card"><h2>Success Metrics</h2><div style="overflow-x:auto;"><table class="kpi-table">
+        <thead><tr><th>Metric</th><th>Current</th><th></th><th>Target</th><th>Timeline</th></tr></thead>
+        <tbody>${strategy.kpis.map(k => `
+          <tr>
+            <td>${k.metric}</td>
+            <td class="kpi-current">${k.current}</td>
+            <td class="kpi-arrow">→</td>
+            <td class="kpi-target">${k.target}</td>
+            <td>${k.timeline}</td>
+          </tr>
+        `).join('')}</tbody>
+      </table></div></div>`;
+
+      // Risks
+      html += `<div class="strat-card"><h2>Risks & Mitigations</h2><div class="risk-items">${strategy.risks.map(r => `
+        <div class="risk-item">
+          <div><div class="risk-label risk-label-risk">Risk</div>${r.risk}</div>
+          <div><div class="risk-label risk-label-mit">Mitigation</div>${r.mitigation}</div>
+        </div>
+      `).join('')}</div></div>`;
+
+      // Budget
+      html += `<div class="strat-card"><h2>Estimated Budget</h2><div class="budget-box">${strategy.budget}</div></div>`;
+
+      document.getElementById('strategyBody').innerHTML = html;
+    }
+  </script>
+</body>
+</html>

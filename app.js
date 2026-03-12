@@ -301,6 +301,16 @@ function renderActions() {
   const peers = Object.values(BRANDS).filter(b => !b.isSelf);
   const actions = [];
 
+  // Strategy page ID mapping
+  const dimToStrategy = {
+    "Carbon Transparency": "carbon-transparency",
+    "Circular Programs": "circular-programs",
+    "Consumer Education": "consumer-education",
+    "Third-Party Certs": "third-party-certs",
+    "Supply Chain Ethics": "adopt-pillar",
+    "Bio-Based Materials": "adopt-pillar",
+  };
+
   // 1. Gap analysis: find biggest gaps vs peer average
   GAP_DIMENSIONS.forEach((dim, i) => {
     const gap = GAP_DATA.peerAverage[i] - GAP_DATA.crocs[i];
@@ -313,6 +323,7 @@ function renderActions() {
         rationale: `Crocs scores ${GAP_DATA.crocs[i]} vs. peer avg ${GAP_DATA.peerAverage[i]} and leader ${GAP_DATA.leader[i]}. ${gap > 20 ? "This is a critical blind spot competitors are exploiting." : "Closing this gap would improve competitive positioning."}`,
         score: gap,
         metric: { label: `${GAP_DATA.crocs[i]} → ${GAP_DATA.peerAverage[i]} target`, pct: Math.round((GAP_DATA.crocs[i] / GAP_DATA.peerAverage[i]) * 100) },
+        strategyId: dimToStrategy[dim] || null,
       });
     }
   });
@@ -333,11 +344,13 @@ function renderActions() {
         rationale: `${count} of ${peers.length} peers actively market this pillar (${brandsUsing.slice(0, 3).join(", ")}${brandsUsing.length > 3 ? "..." : ""}). Crocs has no presence here — adding it would broaden appeal and fill a messaging gap.`,
         score: count * 10,
         metric: { label: `${count}/${peers.length} peers active`, pct: Math.round((count / peers.length) * 100) },
+        strategyId: "adopt-pillar",
       });
     });
 
   // 3. Emerging themes Crocs should watch
   const topThemes = EMERGING_THEMES.filter(t => t.weight >= 75).slice(0, 2);
+  const themeToStrategy = { "Carbon Labeling": "carbon-labeling", "Regenerative Agriculture": "regenerative-agriculture" };
   topThemes.forEach(theme => {
     actions.push({
       priority: theme.weight >= 85 ? "high" : "medium",
@@ -346,6 +359,7 @@ function renderActions() {
       rationale: `"${theme.label}" has a trend strength of ${theme.weight}/100 and is gaining rapid traction industry-wide. Early movers here will own the narrative before it becomes table stakes.`,
       score: theme.weight,
       metric: { label: `Trend strength: ${theme.weight}/100`, pct: theme.weight },
+      strategyId: themeToStrategy[theme.label] || null,
     });
   });
 
@@ -361,6 +375,7 @@ function renderActions() {
       rationale: `Crocs runs ${crocs.campaignVolume} campaigns vs. peer avg of ${avgPeerVolume}. ${topCompetitor.name} leads with ${topCompetitor.campaignVolume}. Higher volume correlates with stronger sentiment scores across tracked brands.`,
       score: volumeGap,
       metric: { label: `${crocs.campaignVolume}/${avgPeerVolume} peer avg`, pct: Math.round((crocs.campaignVolume / avgPeerVolume) * 100) },
+      strategyId: "campaign-volume",
     });
   }
 
@@ -375,6 +390,7 @@ function renderActions() {
       rationale: `${examples} achieved "Very High" engagement. Analyze their formats, channels, and messaging frameworks to inform Crocs' next campaign cycle.`,
       score: 30,
       metric: { label: `${highEngagement.length} campaigns to study`, pct: 60 },
+      strategyId: "peer-campaigns",
     });
   }
 
@@ -388,6 +404,7 @@ function renderActions() {
       rationale: `${sentimentLeader.name} leads consumer sentiment at ${sentimentLeader.sentimentScore}% vs. Crocs' ${crocs.sentimentScore}%. Their approach: ${sentimentLeader.recentInitiative.substring(0, 80)}...`,
       score: sentimentLeader.sentimentScore - crocs.sentimentScore,
       metric: { label: `${crocs.sentimentScore}% → ${sentimentLeader.sentimentScore}% target`, pct: Math.round((crocs.sentimentScore / sentimentLeader.sentimentScore) * 100) },
+      strategyId: "sentiment-gap",
     });
   }
 
@@ -397,8 +414,10 @@ function renderActions() {
 
   // Render
   const grid = document.getElementById("actionsGrid");
-  grid.innerHTML = actions.map(a => `
-    <div class="action-card">
+  grid.innerHTML = actions.map(a => {
+    const linkOpen = a.strategyId ? `<a href="strategy.html?id=${a.strategyId}" class="action-card-link">` : '';
+    const linkClose = a.strategyId ? '</a>' : '';
+    return `${linkOpen}<div class="action-card${a.strategyId ? ' has-strategy' : ''}">
       <span class="action-priority priority-${a.priority}">${a.priority} priority</span>
       <div class="action-type">${a.type}</div>
       <div class="action-title">${a.title}</div>
@@ -407,8 +426,9 @@ function renderActions() {
         <div class="action-metric-bar"><div class="action-metric-fill" style="width:${a.metric.pct}%"></div></div>
         <span>${a.metric.label}</span>
       </div>
-    </div>
-  `).join("");
+      ${a.strategyId ? '<div class="action-view-strategy">View full strategy →</div>' : ''}
+    </div>${linkClose}`;
+  }).join("");
 }
 
 // --- Campaign Feed ---
